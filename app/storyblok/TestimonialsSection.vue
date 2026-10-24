@@ -15,7 +15,7 @@ const gridClasses = getGridClasses();
           {{ blok.lead }}
         </Lead>
       </div>
-      <ul v-if="blok.testimonials.length" :class="gridClasses">
+      <ul v-if="blok.testimonials?.length" :class="gridClasses">
         <li v-for="testimonial in blok.testimonials" :key="testimonial._uid" class="max-w-sm rounded-lg bg-primary-background p-6 xl:max-w-none xl:p-12">
           <blockquote class="text-lg">{{ testimonial?.content?.quote }}</blockquote>
           <div class="mt-8 flex items-center gap-4">

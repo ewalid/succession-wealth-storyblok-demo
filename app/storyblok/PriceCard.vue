@@ -20,7 +20,7 @@ defineProps({ blok: Object });
       <StoryblokRichText :document="blok.text_1" />
     </div>
     <span v-if="blok.price" class="mt-4 text-4xl font-black">${{ blok.price }}<span class="text-2xl font-medium">/month</span></span>
-    <div v-if="blok.button.length" class="my-6">
+    <div v-if="blok.button?.length" class="my-6">
       <Button
         v-for="button in blok.button"
         :key="button._uid"

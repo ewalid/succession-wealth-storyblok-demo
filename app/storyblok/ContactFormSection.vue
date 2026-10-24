@@ -109,7 +109,7 @@ const submit = () => {
               </div>
             </div>
           </div>
-          <Button v-if="blok.button.length && blok.button[0]" :button="blok.button[0]" @click.prevent="submit" />
+          <Button v-if="blok.button?.length && blok.button[0]" :button="blok.button[0]" @click.prevent="submit" />
         </form>
         <Transition name="fade">
           <div
@@ -129,7 +129,7 @@ const submit = () => {
       </div>
     </div>
     <div class="before:left:0 pointer-events-none invisible absolute left-1/2 top-0 z-0 hidden h-full w-1/2 before:absolute before:top-0 before:size-full before:bg-black/40 before:content-[''] lg:visible lg:block ">
-      <img v-if="optimizedImage" class="size-full object-cover" :src="optimizedImage" :alt="blok.image.alt" />
+      <img v-if="optimizedImage" class="size-full object-cover" :src="optimizedImage" :alt="blok.image?.alt" />
     </div>
     <div class="overflow-none relative mt-12 flex min-h-[600px] items-end py-12 lg:invisible lg:hidden">
       <div class="container relative z-10 text-white">
@@ -138,7 +138,7 @@ const submit = () => {
         <p v-if="blok.position" class="text-xl">{{ blok.position }}</p>
       </div>
       <div class="absolute left-0 top-0 z-0 size-full before:absolute before:top-0 before:size-full before:bg-black/40 before:content-['']">
-        <img v-if="optimizedImage" class="size-full object-cover" :src="optimizedImage" :alt="blok.image.alt" />
+        <img v-if="optimizedImage" class="size-full object-cover" :src="optimizedImage" :alt="blok.image?.alt" />
       </div>
     </div>
   </section>

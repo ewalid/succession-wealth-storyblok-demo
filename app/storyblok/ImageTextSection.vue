@@ -22,24 +22,24 @@ const blurredImage = computed(() => getOptimizedImage(props.blok.image, 1000, 0,
       class="container grid items-center gap-6 sm:gap-10 md:gap-12 lg:grid-cols-2"
     >
       <div>
-        <div v-if="blok.image.filename" class="relative rounded-xl bg-cover bg-center bg-no-repeat p-8 md:p-16" :style="`background: url('${blurredImage}'); background-size: cover; background-repeat: no-repeat; background-position: center;`">
+        <div v-if="blok.image?.filename" class="relative rounded-xl bg-cover bg-center bg-no-repeat p-8 md:p-16" :style="`background: url('${blurredImage}'); background-size: cover; background-repeat: no-repeat; background-position: center;`">
           <DecorationImageTopLeft class="absolute left-0 top-0 origin-top-left translate-x-[-20px] translate-y-[-25px] scale-50 md:translate-x-[25px] md:translate-y-[20px] md:scale-100" />
           <img
             v-if="optimizedImages"
             :src="optimizedImages.mobile"
-            :alt="blok.image.alt"
+            :alt="blok.image?.alt"
             class="rounded-lg md:invisible md:hidden"
           />
           <img
             v-if="optimizedImages"
             :src="optimizedImages.tablet"
-            :alt="blok.image.alt"
+            :alt="blok.image?.alt"
             class="invisible hidden rounded-lg md:visible md:block lg:invisible lg:hidden"
           />
           <img
             v-if="optimizedImages"
             :src="optimizedImages.desktop"
-            :alt="blok.image.alt"
+            :alt="blok.image?.alt"
             class="invisible hidden rounded-lg lg:visible lg:block"
           />
         </div>

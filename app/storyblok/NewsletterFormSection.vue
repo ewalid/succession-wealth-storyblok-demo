@@ -33,7 +33,7 @@ const submit = () => {
                 class="rounded-lg bg-white px-6 py-4 text-primary-dark transition-all"
                 required
               />
-              <Button v-if="blok.button.length && blok.button[0]" :button="blok.button[0]" class="focus-ring" @click.prevent="submit" />
+              <Button v-if="blok.button?.length && blok.button[0]" :button="blok.button[0]" class="focus-ring" @click.prevent="submit" />
             </form>
             <Transition name="fade">
               <div

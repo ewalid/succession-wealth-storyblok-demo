@@ -90,8 +90,8 @@ const overlay = computed(() => {
     <div v-if="overlay" class="absolute left-0 top-0 z-10 size-full bg-black/30"></div>
     <video
       v-if="showVideo"
-      :src="blok.background_video.filename"
-      :alt="blok.background_video.alt"
+      :src="blok.background_video?.filename"
+      :alt="blok.background_video?.alt"
       class="absolute left-0 top-0 z-0 size-full object-cover"
       autoplay
       muted

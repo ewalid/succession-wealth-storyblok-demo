@@ -1,11 +1,9 @@
 <script setup>
-import { defineProps } from 'vue';
-
 defineProps({ blok: Object });
 </script>
 
 <template>
-  <div class="video-player">
+  <div v-if="blok?.video?.filename" class="video-player" v-editable="blok">
     <video
       :src="blok.video.filename"
       controls
@@ -18,7 +16,6 @@ defineProps({ blok: Object });
 .video-player {
   display: flex;
   justify-content: center;
-  align-items: center;
   padding: 1rem;
 }
 </style>

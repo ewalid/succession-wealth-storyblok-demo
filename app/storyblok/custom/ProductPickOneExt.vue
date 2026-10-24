@@ -199,7 +199,7 @@ watch(
           v-if="blok.override_product_description && blok.text"
           :text="blok.text"
         />
-        <div v-if="blok.button && blok.button.length" class="mt-8">
+        <div v-if="blok.button && blok.button?.length" class="mt-8">
           <Button
             v-for="button in blok.button"
             :key="button._uid"

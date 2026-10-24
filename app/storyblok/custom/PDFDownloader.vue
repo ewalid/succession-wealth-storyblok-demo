@@ -7,11 +7,11 @@ const props = defineProps({
 });
 
 const onDownload = () => {
-  if (props.blok.file && props.blok.file.filename) {
+  if (props.blok.file && props.blok.file?.filename) {
     const link = document.createElement('a');
-    link.href = props.blok.file.filename;
+    link.href = props.blok.file?.filename;
     link.target = '_blank';
-    link.download = props.blok.file.filename;
+    link.download = props.blok.file?.filename;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -25,7 +25,7 @@ const onDownload = () => {
 <template>
   <div v-editable="blok" class="mx-3 my-2 text-center">
     <a
-      v-if="blok.file.filename"
+      v-if="blok.file?.filename"
       :href="blok.file?.filename"
       :download="blok.file?.filename || ''"
       class="pdf-download-link"
