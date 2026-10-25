@@ -17,6 +17,15 @@ const optimizedArticleImage = computed(() =>
           >
             {{ blok.headline }}
           </H1Headline>
+          <p v-if="blok?.author && typeof blok.author === 'object' && blok.author.content" class="mt-4 text-sm text-primary-dark/70">
+            By
+            <NuxtLink :to="`/${blok.author.full_slug || ''}`" class="font-semibold text-primary-highlight hover:underline">
+              {{ [blok.author.content.first_name, blok.author.content.last_name].filter(Boolean).join(' ') || 'Succession Wealth' }}
+            </NuxtLink>
+          </p>
+          <p v-else-if="blok?.author === '' || blok?.author === null" class="mt-4 text-sm text-primary-dark/70">
+            By Succession Wealth
+          </p>
         </div>
         <div v-if="optimizedArticleImage" class="px-4 lg:px-0">
           <div class="relative">

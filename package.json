@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "axe-core": "^4.13.0",
+    "leaflet": "^1.9.4",
     "shopify-buy": "^2.22.0",
     "vwo-fme-node-sdk": "^1.61.0"
   },

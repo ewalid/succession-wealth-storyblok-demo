@@ -3,7 +3,7 @@ import tailwind from 'eslint-plugin-tailwindcss';
 
 export default storyblokLintConfig(
   {
-    ignores: ['**/*.md'],
+    ignores: ['**/*.md', 'demo-build/**', '**/*.json'],
   },
   {
     rules: {

@@ -1,36 +1,41 @@
 <script setup>
 const defaultFontFamilies = {
-  '--font-family-display': 'ABCMarfa, sans-serif',
-  '--font-family-body': 'ABCMarfa, sans-serif',
+  '--font-family-display': '\'EB Garamond\', Georgia, serif',
+  '--font-family-body': '\'Hanken Grotesk\', system-ui, sans-serif',
 };
 
+// Succession Wealth palette. Bronze, cream and the accent yellow/teal come from
+// successionwealth.co.uk; navy is the demo's dark anchor. This is only the
+// fallback: the site-config story (use_custom_colors) overrides every value, so
+// marketers can retune the brand without a deploy.
 const defaultColors = {
-  '--primary-highlight': '#6251B8',
-  '--highlight-1': '#80efac',
-  '--highlight-2': '#786b2b',
-  '--highlight-3': '#d4ff92',
-  '--primary-background': '#F5F5F7',
-  '--background-1': '#F4F2E9',
-  '--background-2': '#e4ddb9',
-  '--background-3': '#D9EEFF',
-  '--background-4': '#D7E4F2',
-  '--background-5': '#D9D4FC',
-  '--background-6': '#F2F1D7',
-  '--background-7': '#E0F0D2',
-  '--background-8': '#FFE7D3',
-  '--background-9': '#FFD5D3',
-  '--background-10': '#D2FEC9',
-  '--primary-dark': '#1F1F1F',
+  '--primary-highlight': '#8b6f4b',
+  '--highlight-1': '#ffc40d',
+  '--highlight-2': '#6b5434',
+  '--highlight-3': '#4bc1ca',
+  '--primary-background': '#f3f1ed',
+  '--background-1': '#f7f5f1',
+  '--background-2': '#e9e3d8',
+  '--background-3': '#e4e8ef',
+  '--background-4': '#d5dce8',
+  '--background-5': '#efe6d6',
+  '--background-6': '#f4efe4',
+  '--background-7': '#dcebea',
+  '--background-8': '#f4e8d6',
+  '--background-9': '#ecddd2',
+  '--background-10': '#e6eef0',
+  '--primary-dark': '#14213d',
 };
 
+// Small radii on purpose: a wealth brand reads as precise, not bubbly.
 const defaultBorderRadiuses = {
-  '--rounded_sm': '4px',
-  '--rounded_default': '6px',
-  '--rounded_md': '8px',
-  '--rounded_lg': '10px',
-  '--rounded_xl': '15px',
-  '--rounded_2xl': '20px',
-  '--rounded_3xl': '25px',
+  '--rounded_sm': '2px',
+  '--rounded_default': '2px',
+  '--rounded_md': '3px',
+  '--rounded_lg': '4px',
+  '--rounded_xl': '6px',
+  '--rounded_2xl': '8px',
+  '--rounded_3xl': '10px',
   '--rounded_full': '9999px',
 };
 
@@ -91,10 +96,10 @@ const cssVariables = computed(() => {
     // TODO: enable colored headlines without changing colors
     Object.assign(theme, defaultColors);
     if (siteConfig.value.content.colored_headlines) {
-      theme['--headline-color'] = defaultColors['--primary'];
+      theme['--headline-color'] = defaultColors['--primary-highlight'];
     }
     else {
-      theme['--headline-color'] = defaultColors['--dark'];
+      theme['--headline-color'] = defaultColors['--primary-dark'];
     }
   }
   if (siteConfig.value.content.disable_rounded_corners) {
@@ -247,7 +252,7 @@ watch(route, () => {
 }
 
 body {
-  @apply pt-32 text-primary-dark font-body;
+  @apply pt-20 text-primary-dark font-body antialiased overflow-x-clip md:pt-24;
 }
 
 section.page-section {

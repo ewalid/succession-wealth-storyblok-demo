@@ -5,21 +5,7 @@ const inEditor = computed(() => {
   return !!query._storyblok;
 });
 
-const url = computed(() => {
-  if (props.button.link.url !== '') {
-    return '';
-  }
-  switch (props.button.link.linktype) {
-    case 'story':
-      return `/${props.button.link.story?.full_slug}`;
-    case 'email':
-      return `mailto:${props.button.link.email}`;
-    case 'url':
-    case 'asset':
-    default:
-      return props.button.link.url;
-  }
-});
+const url = computed(() => props.link || getLinkUrl(props.button?.link));
 
 /**
  * The two colours come from Storyblok as token names. They are passed as CSS

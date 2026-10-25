@@ -195,3 +195,54 @@
   font-weight: 900;
   src: url('../fonts/roboto-v47-latin-900.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+
+/* Succession Wealth brand fonts: EB Garamond (display) and Hanken Grotesk (body). Latin subsets via Fontsource. */
+@font-face {
+  font-display: swap;
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/eb-garamond-latin-400.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/eb-garamond-latin-500.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/eb-garamond-latin-600.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'EB Garamond';
+  font-style: italic;
+  font-weight: 400;
+  src: url('../fonts/eb-garamond-latin-400-italic.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/hanken-grotesk-latin-400.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/hanken-grotesk-latin-500.woff2') format('woff2');
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/hanken-grotesk-latin-600.woff2') format('woff2');
+}

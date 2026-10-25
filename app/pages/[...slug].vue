@@ -11,6 +11,7 @@ const resolveRelations = [
   'article-page.call_to_action',
   'testimonials-section.testimonials',
   'form-reference.forms',
+  ...PLANNER_RESOLVE_RELATIONS,
 ];
 const story = ref(null);
 const storyblokApi = useStoryblokApi();
