@@ -28,7 +28,7 @@ const meta = computed(() => {
   >
     <div class="relative aspect-video overflow-hidden bg-background-2">
       <img v-if="image" :src="image" alt="" class="size-full object-cover transition duration-500 group-hover:scale-[1.03]" />
-      <div v-else class="flex size-full items-center justify-center font-display text-3xl text-highlight-2">{{ kind }}</div>
+      <div v-else class="size-full bg-gradient-to-br from-background-2 to-background-5"></div>
       <span
         class="absolute left-3 top-3 rounded-sm px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
         :class="past ? 'bg-primary-dark/80 text-white' : 'bg-white text-primary-dark'"
