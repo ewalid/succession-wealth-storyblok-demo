@@ -17,54 +17,42 @@ const props = defineProps({
   facebook: Object,
 });
 
-const textColor = computed(() => {
-  return props.footerLight ? 'text-primary-dark' : 'text-white';
-});
-
-const backgroundColor = computed(() => {
-  return props.footerLight ? 'bg-primary-background' : 'bg-primary-dark';
-});
+const textColor = computed(() => (props.footerLight ? 'text-[#121213]' : 'text-white'));
+const muted = computed(() => (props.footerLight ? 'text-[#121213]/70' : 'text-white/70'));
+const backgroundColor = computed(() => (props.footerLight ? 'bg-[#F3F1ED]' : 'bg-[#121213]'));
 </script>
 
 <template>
   <footer class="relative w-full" :class="backgroundColor">
-    <div class="container grid gap-12 pt-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-      <div class="flex flex-col items-start sm:col-span-2 md:col-span-3 lg:col-span-2">
-        <Headline v-if="headline" size="small" :color="textColor" :headline="headline" />
-      </div>
-    </div>
-    <div
-      class="container grid gap-12 pb-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
-    >
-      <div class="flex flex-col items-start sm:col-span-2 md:col-span-3 lg:col-span-2">
-        <div>
-          <div v-if="about" class="prose prose-lg mb-8 text-sm lg:text-base" :class="textColor">
+    <div class="mx-auto max-w-[1200px] px-4 py-14 lg:px-6 lg:py-16">
+      <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <div class="lg:col-span-1">
+          <img
+            v-if="logo?.filename"
+            :src="logo.filename"
+            :alt="logo.alt || 'Succession Wealth'"
+            class="mb-6 h-auto w-40 object-contain"
+            :class="footerLight ? '' : 'brightness-0 invert'"
+          />
+          <div v-if="about" class="prose prose-sm max-w-none" :class="[textColor, muted]">
             <StoryblokRichText :document="about" />
           </div>
-          <SocialIcons
-            :x="x"
-            :instagram="instagram"
-            :youtube="youtube"
-            :facebook="facebook"
-            :text-color="textColor"
-          />
+          <p v-else class="text-sm leading-relaxed" :class="muted">
+            Succession Wealth is a trading style of Succession Wealth Management Limited,
+            authorised and regulated by the Financial Conduct Authority. FRN 588378.
+          </p>
         </div>
+        <FooterNav v-if="nav1?.length" :nav="nav1" :headline="nav1Headline || 'Legal information'" :text-color="textColor" />
+        <FooterNav v-if="nav2?.length" :nav="nav2" :headline="nav2Headline || 'Client portals'" :text-color="textColor" />
+        <FooterNav v-if="nav3?.length" :nav="nav3" :headline="nav3Headline || 'Explore'" :text-color="textColor" />
       </div>
-      <FooterNav v-if="nav1.length" :nav="nav1" :headline="nav1Headline" :text-color="textColor" />
-      <FooterNav v-if="nav2.length" :nav="nav2" :headline="nav2Headline" :text-color="textColor" />
-      <FooterNav v-if="nav3.length" :nav="nav3" :headline="nav3Headline" :text-color="textColor" />
+
+      <div class="mt-12 border-t pt-6" :class="footerLight ? 'border-[#121213]/15' : 'border-white/15'">
+        <p class="text-xs leading-relaxed" :class="muted">
+          The value of investments can go down as well as up and you may get back less than you invest.
+          Past performance is not a reliable indicator of future results.
+        </p>
+      </div>
     </div>
-    <div v-if="decoration" class="container relative z-10">
-      <div
-        class="h-px w-full bg-gray-500"
-      ></div>
-      <img
-        src="~/assets/images/made-with-love.svg"
-        width="120"
-        class="pointer-events-none mx-auto block py-9"
-        alt="Made with love by the Storyblok team!"
-      />
-    </div>
-    <Decoration3 v-if="decoration" fill="highlight-1" class="pointer-events-none absolute bottom-0 right-0 z-0" />
   </footer>
 </template>

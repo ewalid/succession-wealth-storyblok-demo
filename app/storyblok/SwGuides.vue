@@ -10,10 +10,10 @@ function cardLink(card) {
 </script>
 
 <template>
-  <section v-editable="blok" class="bg-[#F3F1ED] py-16 md:py-24">
-    <div class="container">
+  <section v-editable="blok" class="bg-[#F3F1ED] py-14 md:py-20">
+    <div class="mx-auto max-w-[1200px] px-4 lg:px-6">
       <div class="mx-auto max-w-3xl text-center">
-        <h2 class="font-display text-3xl font-normal text-[#121213] md:text-[2.5rem]">
+        <h2 class="font-display text-[1.875rem] font-normal text-[#121213] md:text-[40px]">
           {{ blok?.headline || 'Expert guides' }}
         </h2>
         <p v-if="blok?.intro" class="mt-4 text-base leading-relaxed text-[#121213]/80 md:text-lg">
@@ -27,9 +27,9 @@ function cardLink(card) {
           :key="card._uid"
           v-editable="card"
           :href="cardLink(card)"
-          class="group flex flex-col overflow-hidden rounded-[6px] bg-white shadow-sm transition hover:shadow-md"
+          class="group flex flex-col overflow-hidden rounded-[5px] bg-white shadow-sm transition hover:shadow-md"
         >
-          <div class="aspect-[16/10] overflow-hidden">
+          <div class="aspect-[16/10] overflow-hidden bg-[#e9e3d8]">
             <img
               v-if="cardImage(card)"
               :src="cardImage(card)"
@@ -44,7 +44,7 @@ function cardLink(card) {
             <p v-if="card.subtitle" class="mt-2 text-sm leading-relaxed text-white/90">
               {{ card.subtitle }}
             </p>
-            <span class="mt-auto pt-4 text-sm font-semibold underline-offset-2 group-hover:underline">
+            <span class="mt-auto pt-5 text-sm font-semibold underline-offset-4 group-hover:underline">
               {{ card.cta_label || 'Download' }}
             </span>
           </div>

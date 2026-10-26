@@ -9,34 +9,37 @@ const secondary = computed(() => getLinkUrl(props.blok?.secondary_cta_link) || '
 <template>
   <section
     v-editable="blok"
-    class="relative isolate min-h-[min(70vh,640px)] overflow-hidden bg-primary-dark"
+    class="relative isolate overflow-hidden bg-[#121213]"
   >
     <img
       v-if="image"
       :src="image"
       :alt="blok?.image?.alt || ''"
-      class="absolute inset-0 size-full object-cover"
+      class="absolute inset-0 size-full object-cover object-center"
     />
-    <div class="absolute inset-0 bg-black/25"></div>
+    <div class="absolute inset-0 bg-black/20"></div>
 
-    <div class="container relative flex min-h-[min(70vh,640px)] items-center justify-start py-24 md:py-28">
-      <div class="mr-auto w-full max-w-xl rounded-[6px] bg-black/65 p-7 text-white shadow-lg backdrop-blur-[2px] sm:p-10">
-        <h1 class="font-display text-[2rem] font-normal leading-tight tracking-tight sm:text-[2.75rem]">
+    <div class="relative mx-auto flex min-h-[522px] max-w-[1200px] items-center px-4 py-16 lg:px-6 lg:py-20">
+      <div class="w-full max-w-[454px] rounded-[5px] bg-black/65 px-8 py-9 text-white sm:px-10 sm:py-10">
+        <h1 class="font-[family-name:var(--font-family-hero)] text-[2rem] font-extralight leading-[1.2] tracking-[-0.01em] sm:text-[44px] sm:leading-[52.8px]">
           {{ blok?.headline || 'Helping you build and protect your wealth' }}
         </h1>
-        <p v-if="blok?.intro" class="mt-4 text-base leading-relaxed text-white/90 sm:text-lg">
+        <p
+          v-if="blok?.intro"
+          class="mt-4 text-base font-medium leading-relaxed text-white sm:text-lg"
+        >
           {{ blok.intro }}
         </p>
-        <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:gap-4">
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:gap-4">
           <a
             :href="primary"
-            class="inline-flex items-center justify-center rounded-[5px] bg-[#8B6F4B] px-8 py-3 text-sm font-semibold text-white transition hover:bg-[#6f583c]"
+            class="inline-flex items-center justify-center rounded-[5px] border border-[#8B6F4B] bg-[#8B6F4B] px-8 py-3 text-base font-medium text-white transition hover:bg-[#6f583c]"
           >
             {{ blok?.primary_cta_label || 'Book a meeting' }}
           </a>
           <a
             :href="secondary"
-            class="inline-flex items-center justify-center rounded-[5px] border border-white px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+            class="inline-flex items-center justify-center rounded-[5px] border border-white bg-transparent px-8 py-3 text-base font-medium text-white transition hover:bg-white/10"
           >
             {{ blok?.secondary_cta_label || 'Explore solutions' }}
           </a>

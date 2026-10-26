@@ -7,36 +7,33 @@ const reverse = computed(() => !!props.blok?.image_left);
 </script>
 
 <template>
-  <section
-    v-editable="blok"
-    class="bg-white py-16 md:py-24"
-  >
+  <section v-editable="blok" class="bg-white py-14 md:py-20">
     <div
-      class="container grid items-center gap-10 lg:grid-cols-2 lg:gap-16"
+      class="mx-auto grid max-w-[1200px] items-center gap-10 px-4 lg:grid-cols-2 lg:gap-16 lg:px-6"
       :class="reverse ? 'lg:[&>*:first-child]:order-2' : ''"
     >
-      <div>
+      <div class="max-w-xl">
         <p
           v-if="blok?.eyebrow"
-          class="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary-highlight"
+          class="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-[#8B6F4B]"
         >
           {{ blok.eyebrow }}
         </p>
-        <h2 class="font-display text-3xl font-normal leading-snug text-[#121213] md:text-[2.5rem]">
+        <h2 class="font-display text-[1.875rem] font-normal leading-snug text-[#121213] md:text-[40px] md:leading-[1.25]">
           {{ blok?.headline }}
         </h2>
-        <p v-if="blok?.body" class="mt-5 max-w-xl text-base leading-relaxed text-[#121213]/80 md:text-lg">
+        <p v-if="blok?.body" class="mt-5 text-base leading-relaxed text-[#121213]/80 md:text-lg">
           {{ blok.body }}
         </p>
         <a
           v-if="blok?.cta_label"
           :href="cta"
-          class="mt-8 inline-flex items-center justify-center rounded-[5px] bg-[#8B6F4B] px-8 py-3 text-sm font-semibold text-white transition hover:bg-[#6f583c]"
+          class="mt-8 inline-flex items-center justify-center rounded-[5px] border border-[#8B6F4B] bg-[#8B6F4B] px-8 py-3 text-base font-medium text-white transition hover:bg-[#6f583c]"
         >
           {{ blok.cta_label }}
         </a>
       </div>
-      <div class="overflow-hidden rounded-[6px]">
+      <div class="overflow-hidden rounded-[5px]">
         <img
           v-if="image"
           :src="image"

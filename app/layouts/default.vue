@@ -1,7 +1,9 @@
 <script setup>
 const defaultFontFamilies = {
-  '--font-family-display': '\'EB Garamond\', Georgia, serif',
-  '--font-family-body': '\'Hanken Grotesk\', system-ui, sans-serif',
+  // Sabon stand-in for section heads; thin Montserrat stands in for Aktiv Grotesk Thin on hero.
+  '--font-family-display': '\'EB Garamond\', \'Palatino Linotype\', Palatino, serif',
+  '--font-family-body': '\'Montserrat\', \'Hanken Grotesk\', system-ui, sans-serif',
+  '--font-family-hero': '\'Montserrat\', system-ui, sans-serif',
 };
 
 // Succession Wealth palette. Bronze, cream and the accent yellow/teal come from
@@ -24,7 +26,7 @@ const defaultColors = {
   '--background-8': '#f4e8d6',
   '--background-9': '#ecddd2',
   '--background-10': '#e6eef0',
-  '--primary-dark': '#14213d',
+  '--primary-dark': '#121213',
 };
 
 // Small radii on purpose: a wealth brand reads as precise, not bubbly.
@@ -144,8 +146,6 @@ const headConfig = computed(() => ({
 
 useHead(headConfig);
 
-const mobileNavOpen = ref(false);
-
 const route = useRoute();
 const currentSection = computed(() =>
   route.params.slug?.[0] || route.query.path?.split('/')[0] || '',
@@ -160,27 +160,11 @@ const currentSection = computed(() =>
 watch(currentSection, async () => {
   siteConfig.value = (await getSiteConfig()).value;
 });
-
-watch(route, () => {
-  mobileNavOpen.value = false;
-});
 </script>
 
 <template>
   <main>
-    <Header
-      :logo="siteConfig.content.header_logo"
-      :nav="siteConfig.content.header_nav"
-      :buttons="siteConfig.content.header_buttons"
-      :light="siteConfig.content.header_light"
-      :enable-cart="siteConfig.content.enable_cart"
-      @toggle-mobile-nav="mobileNavOpen = !mobileNavOpen"
-    />
-    <MobileNav
-      :mobile-nav="siteConfig.content.header_nav"
-      :mobile-nav-open="mobileNavOpen"
-      :enable-cart="siteConfig.content.enable_cart"
-    />
+    <Header :logo="siteConfig.content.header_logo" />
     <div
       v-if="viewingSiteConfig && siteConfig.content.use_custom_colors"
       class="container py-12"
@@ -252,7 +236,8 @@ watch(route, () => {
 }
 
 body {
-  @apply pt-20 text-primary-dark font-body antialiased overflow-x-clip md:pt-24;
+  /* Sticky Succession header ~102px — no large fixed-header offset padding. */
+  @apply text-[#121213] font-body antialiased overflow-x-clip;
 }
 
 section.page-section {
