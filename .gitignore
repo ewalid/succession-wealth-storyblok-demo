@@ -26,3 +26,6 @@ install.pem
 .env*
 __pycache__/
 demo-build/data/
+
+# Local replicate-site groundwork state (customer-specific scrape artifacts)
+demo-build/replicate/
