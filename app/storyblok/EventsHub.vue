@@ -34,7 +34,7 @@ const past = computed(() => events.value.filter(isPastEvent).sort((a, b) => even
   <section v-editable="blok" class="bg-primary-background py-14 md:py-20">
     <div class="container">
       <h1 class="font-display text-4xl text-primary-dark md:text-5xl">{{ blok?.title || 'Upcoming events' }}</h1>
-      <p v-if="blok?.intro" class="mt-4 max-w-2xl text-lg text-primary-dark/75">{{ blok.intro }}</p>
+      <RichText v-if="hasRichText(blok?.intro)" :value="blok.intro" class="mt-4 max-w-2xl text-lg text-primary-dark/75" />
       <div v-if="upcoming.length" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <ContentCard v-for="e in upcoming" :key="e.uuid" :story="e" />
       </div>

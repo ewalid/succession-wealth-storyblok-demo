@@ -87,13 +87,12 @@ function onSubmit() {
       >
         {{ blok?.headline || 'Ready for a conversation?' }}
       </h2>
-      <p
-        v-if="blok?.intro"
-        class="mt-4 whitespace-pre-line text-base leading-relaxed"
+      <RichText
+        v-if="hasRichText(blok?.intro)"
+        :value="blok.intro"
+        class="mt-4 text-base leading-relaxed"
         :class="mutedClass"
-      >
-        {{ blok.intro }}
-      </p>
+      />
       <p v-if="plannerName || officeName" class="mt-2 text-sm font-semibold text-[#8B6F4B]">
         <span v-if="plannerName">About {{ plannerName }}</span>
         <span v-if="plannerName && officeName"> · </span>
@@ -105,8 +104,9 @@ function onSubmit() {
       v-if="submitted"
       class="rounded-[6px] border border-[#8B6F4B]/35 bg-white p-6 text-[#121213]"
     >
-      <p class="font-display text-2xl">
-        {{ blok?.thank_you_message || 'Thank you — we will be in touch shortly.' }}
+      <RichText v-if="hasRichText(blok?.thank_you_message)" :value="blok.thank_you_message" class="font-display text-2xl" />
+      <p v-else class="font-display text-2xl">
+        Thank you — we will be in touch shortly.
       </p>
     </div>
 

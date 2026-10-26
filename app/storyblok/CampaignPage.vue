@@ -73,7 +73,7 @@ const isBackground = computed(() => ['overlay_card', 'centered', 'compact'].incl
         >
           <div>
             <h1 class="font-display font-medium" :class="{ 'text-3xl md:text-4xl': layout === 'compact', 'text-4xl md:text-5xl': layout === 'overlay_card', 'text-4xl md:text-6xl': layout === 'centered' }">{{ blok?.headline || 'Campaign' }}</h1>
-            <p v-if="blok?.intro" class="mt-4 text-lg text-white/85" :class="layout === 'centered' ? 'mx-auto max-w-2xl' : ''">{{ blok.intro }}</p>
+            <RichText v-if="hasRichText(blok?.intro)" :value="blok.intro" class="mt-4 text-lg text-white/85" :class="layout === 'centered' ? 'mx-auto max-w-2xl' : ''" />
             <p v-if="office" class="mt-3 text-sm text-white/80">Serving {{ office.content?.name }}</p>
           </div>
           <a
@@ -91,7 +91,7 @@ const isBackground = computed(() => ['overlay_card', 'centered', 'compact'].incl
       <div class="container grid items-center gap-10 py-14 md:grid-cols-2 md:py-20">
         <div>
           <h1 class="font-display text-4xl font-medium text-primary-dark md:text-5xl">{{ blok?.headline || 'Campaign' }}</h1>
-          <p v-if="blok?.intro" class="mt-4 text-lg text-primary-dark/75">{{ blok.intro }}</p>
+          <RichText v-if="hasRichText(blok?.intro)" :value="blok.intro" class="mt-4 text-lg text-primary-dark/75" />
           <p v-if="office" class="mt-3 text-sm font-semibold text-[#8B6F4B]">Serving {{ office.content?.name }}</p>
           <a v-if="ctaLabel" :href="ctaHref" class="mt-7 inline-flex items-center justify-center rounded-[5px] bg-[#8B6F4B] px-7 py-3 font-medium text-white transition hover:bg-[#6f583c]">{{ ctaLabel }}</a>
         </div>
@@ -107,7 +107,7 @@ const isBackground = computed(() => ['overlay_card', 'centered', 'compact'].incl
     <section v-else class="bg-primary-dark text-white">
       <div class="container py-16 md:py-20">
         <h1 class="max-w-3xl font-display text-4xl font-medium md:text-5xl">{{ blok?.headline || 'Campaign' }}</h1>
-        <p v-if="blok?.intro" class="mt-4 max-w-2xl text-lg text-white/85">{{ blok.intro }}</p>
+        <RichText v-if="hasRichText(blok?.intro)" :value="blok.intro" class="mt-4 max-w-2xl text-lg text-white/85" />
         <p v-if="office" class="mt-3 text-sm text-white/80">Serving {{ office.content?.name }}</p>
         <a v-if="ctaLabel" :href="ctaHref" class="mt-7 inline-flex items-center justify-center rounded-[5px] bg-[#8B6F4B] px-7 py-3 font-medium text-white transition hover:bg-[#6f583c]">{{ ctaLabel }}</a>
       </div>

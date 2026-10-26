@@ -22,9 +22,7 @@ const reverse = computed(() => !!props.blok?.image_left);
         <h2 class="font-display text-[1.875rem] font-normal leading-snug text-[#121213] md:text-[40px] md:leading-[1.25]">
           {{ blok?.headline }}
         </h2>
-        <p v-if="blok?.body" class="mt-5 text-base leading-relaxed text-[#121213]/80 md:text-lg">
-          {{ blok.body }}
-        </p>
+        <RichText v-if="hasRichText(blok?.body)" :value="blok.body" class="mt-5 text-base leading-relaxed text-[#121213]/80 md:text-lg" />
         <a
           v-if="blok?.cta_label"
           :href="cta"

@@ -16,9 +16,7 @@ function cardLink(card) {
         <h2 class="font-display text-[1.875rem] font-normal text-[#121213] md:text-[40px]">
           {{ blok?.headline || 'Expert guides' }}
         </h2>
-        <p v-if="blok?.intro" class="mt-4 text-base leading-relaxed text-[#121213]/80 md:text-lg">
-          {{ blok.intro }}
-        </p>
+        <RichText v-if="hasRichText(blok?.intro)" :value="blok.intro" class="mt-4 text-base leading-relaxed text-[#121213]/80 md:text-lg" />
       </div>
 
       <div class="mt-12 grid gap-6 md:grid-cols-3">

@@ -19,7 +19,7 @@ const topicLabel = computed(() => (topic.value ? labelFor(labels.value, topic.va
       <div class="container relative py-20 md:py-28">
         <p class="text-xs font-semibold uppercase tracking-[0.18em] text-white/75">Topic hub<span v-if="topicLabel"> · {{ topicLabel }}</span></p>
         <h1 class="mt-3 max-w-3xl font-hero text-5xl font-extralight md:text-6xl">{{ blok?.title }}</h1>
-        <p v-if="blok?.intro" class="mt-5 max-w-2xl text-lg text-white/85">{{ blok.intro }}</p>
+        <RichText v-if="hasRichText(blok?.intro)" :value="blok.intro" class="mt-5 max-w-2xl text-lg text-white/85" />
       </div>
     </section>
 

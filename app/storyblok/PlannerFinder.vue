@@ -106,9 +106,7 @@ onMounted(() => {
         <h2 class="font-display text-3xl font-medium md:text-4xl">
           {{ blok?.title || 'Find the right planner' }}
         </h2>
-        <p v-if="blok?.intro" class="mt-3 text-white/75">
-          {{ blok.intro }}
-        </p>
+        <RichText v-if="hasRichText(blok?.intro)" :value="blok.intro" class="mt-3 text-white/75" />
         <p v-else class="mt-3 text-white/75">
           Tell us your postcode, how you prefer to meet, and what you want help with.
         </p>
