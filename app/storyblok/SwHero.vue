@@ -28,7 +28,7 @@ const secondary = computed(() => getLinkUrl(props.blok?.secondary_cta_link) || '
       muted
       loop
       playsinline
-    />
+    ></video>
     <img
       v-else-if="image"
       :src="image"
