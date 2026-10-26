@@ -1,7 +1,19 @@
 <script setup>
 defineProps({ blok: Object, index: Number });
-const componentExists = component =>
-  typeof resolveComponent(component) !== 'string';
+
+/**
+ * StoryblokComponent resolves `planner_grid` as `planner-grid` (underscores →
+ * hyphens). Mirror that here so ComponentCheck does not claim the Vue file is
+ * missing when the CMS technical name still uses underscores.
+ */
+const componentExists = (component) => {
+  if (!component) {
+    return false;
+  }
+  const hyphenated = String(component).replace(/_/g, '-');
+  return typeof resolveComponent(hyphenated) !== 'string'
+    || typeof resolveComponent(component) !== 'string';
+};
 </script>
 
 <template>
