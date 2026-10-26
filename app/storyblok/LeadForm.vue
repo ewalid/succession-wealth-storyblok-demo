@@ -15,7 +15,7 @@ const attribution = captureAttribution();
 const layout = computed(() => props.blok?.layout || 'dark_panel');
 const background = computed(() => props.blok?.background || 'navy');
 const formMode = computed(() => props.blok?.form_mode || 'native');
-const fieldColumns = computed(() => String(props.blok?.field_columns || '2'));
+const fieldColumns = computed(() => String(props.blok?.field_columns || '1'));
 const formWidth = computed(() => props.blok?.form_width || 'medium');
 const imagePosition = computed(() => props.blok?.image_position || 'right');
 
@@ -212,11 +212,11 @@ async function onSubmit(payload) {
           layout === 'two_column_wide' ? 'max-w-4xl' : '',
         ]"
       >
+        <!-- Dark/bronze panels keep a frosted card; cream/white Succession look is flush on the section. -->
         <div
-          class="rounded-lg p-5 sm:p-8"
           :class="sectionTone === 'dark' || sectionTone === 'bronze'
-            ? 'bg-white/10 backdrop-blur-sm'
-            : 'bg-white text-primary-dark shadow-sm'"
+            ? 'rounded-lg bg-white/10 p-5 shadow-sm backdrop-blur-sm sm:p-8'
+            : layout === 'stacked' ? 'py-2' : 'rounded-lg bg-white p-5 text-primary-dark shadow-sm sm:p-8'"
         >
           <LeadFormFields
             :blok="blok"
