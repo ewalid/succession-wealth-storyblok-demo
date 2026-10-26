@@ -242,7 +242,10 @@ function onSubmit() {
           <label
             v-if="field.field_type !== 'checkbox'"
             class="block"
-            :class="twoCol && field.field_type === 'textarea' ? 'sm:col-span-2' : ''"
+            :class="[
+              twoCol && (field.width !== 'half' || field.field_type === 'textarea') ? 'sm:col-span-2' : '',
+              !twoCol ? '' : '',
+            ]"
           >
             <span v-if="!usePlaceholders || field.field_type === 'select' || field.field_type === 'radio' || field.field_type === 'textarea'" :class="labelClass">
               {{ field.label }}<span v-if="field.is_required">*</span>

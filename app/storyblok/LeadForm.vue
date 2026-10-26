@@ -12,12 +12,16 @@ const inEditor = computed(() => route.query._storyblok !== undefined);
 const answers = readFinderAnswers();
 const attribution = captureAttribution();
 
-const layout = computed(() => props.blok?.layout || 'dark_panel');
-const background = computed(() => props.blok?.background || 'navy');
+const layout = computed(() => props.blok?.layout || 'stacked');
+const background = computed(() => props.blok?.background || 'cream');
 const formMode = computed(() => props.blok?.form_mode || 'native');
 const fieldColumns = computed(() => String(props.blok?.field_columns || '1'));
 const formWidth = computed(() => props.blok?.form_width || 'medium');
 const imagePosition = computed(() => props.blok?.image_position || 'right');
+/** Full-width form vs half form + side image (marketer-facing control). */
+const isSplit = computed(() =>
+  props.blok?.page_layout === 'split' || props.blok?.layout === 'split_image',
+);
 
 const selectedFields = computed(() => {
   const raw = props.blok?.fields;
@@ -134,9 +138,9 @@ async function onSubmit(payload) {
       class="absolute inset-0 bg-primary-dark/55"
     ></div>
 
-    <div class="container relative" :class="layout === 'split_image' ? 'max-w-6xl' : ''">
+    <div class="container relative" :class="isSplit ? 'max-w-6xl' : ''">
       <div
-        v-if="layout === 'split_image'"
+        v-if="isSplit"
         class="grid items-stretch gap-0 overflow-hidden rounded-lg bg-white text-primary-dark shadow-xl lg:grid-cols-2"
         :class="imagePosition === 'left' ? 'lg:[direction:rtl]' : ''"
       >
