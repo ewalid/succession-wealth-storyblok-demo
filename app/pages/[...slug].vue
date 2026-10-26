@@ -125,9 +125,9 @@ const _viewingSiteConfigState = useState(
 );
 
 const headConfig = {
-  title: story.value?.content?.meta_title ?? 'Brand New Day',
+  title: story.value?.content?.meta_title ?? story.value?.name ?? 'Succession Wealth',
   meta: [
-    { name: 'description', content: story.value?.content?.meta_title ?? 'A Demo Day for Your New Storyblok Project.' },
+    { name: 'description', content: story.value?.content?.meta_description ?? 'Independent financial advice from Succession Wealth.' },
   ],
 };
 

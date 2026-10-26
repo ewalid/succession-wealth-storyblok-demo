@@ -70,15 +70,9 @@ watchEffect(async (onCleanup) => {
   }
   map = L.map(mapEl.value, { scrollWheelZoom: false, attributionControl: true });
   map.setView([coords.value.lat, coords.value.lng], 11);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    subdomains: 'abcd',
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
     maxZoom: 18,
-  }).addTo(map);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
-    subdomains: 'abcd',
-    maxZoom: 18,
-    pane: 'shadowPane',
   }).addTo(map);
   L.marker([coords.value.lat, coords.value.lng]).addTo(map);
   if (radius.value) {
