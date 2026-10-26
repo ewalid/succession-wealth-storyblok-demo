@@ -22,7 +22,8 @@ const address = computed(() => (office.value?.content?.address || '').split('\n'
   + (office.value?.content?.postcode ? `, ${office.value.content.postcode}` : ''));
 const tokenValues = computed(() => ({ city: city.value, phone: phone.value, address: address.value, officeUuid: officeUuid.value }));
 provideLocationTokens(tokenValues);
-const t = useLocationTokens();
+// inject() cannot read what this same component provides, so fill the page's own fields directly.
+const t = value => replaceLocationTokens(value, tokenValues.value);
 
 const hero = computed(() => getOptimizedImage(props.blok?.hero_image, 2000, 1000));
 const ctaHref = computed(() => getLinkUrl(props.blok?.cta_link) || '#lead-form');

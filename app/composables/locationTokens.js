@@ -9,6 +9,10 @@ export function provideLocationTokens(values) {
   provide(KEY, values);
 }
 
+export function replaceLocationTokens(value, map) {
+  return replaceIn(value, map || {});
+}
+
 function replaceIn(value, map) {
   if (typeof value === 'string') {
     return value.replace(/\{(city|phone|address)\}/g, (m, k) => map[k] || m);
