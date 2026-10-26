@@ -37,7 +37,7 @@ function cardLink(card) {
               class="size-full object-cover transition duration-500 group-hover:scale-[1.03]"
             />
           </div>
-          <div class="flex flex-1 flex-col bg-primary-highlight px-5 py-5 text-white">
+          <div class="flex flex-1 flex-col bg-[#8B6F4B] px-5 py-5 text-white">
             <h3 class="font-display text-xl font-normal leading-snug">
               {{ card.title }}
             </h3>

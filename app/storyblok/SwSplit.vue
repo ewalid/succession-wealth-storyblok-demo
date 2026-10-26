@@ -31,7 +31,7 @@ const reverse = computed(() => !!props.blok?.image_left);
         <a
           v-if="blok?.cta_label"
           :href="cta"
-          class="mt-8 inline-flex items-center justify-center rounded-[5px] bg-primary-highlight px-8 py-3 text-sm font-semibold text-white transition hover:bg-highlight-2"
+          class="mt-8 inline-flex items-center justify-center rounded-[5px] bg-[#8B6F4B] px-8 py-3 text-sm font-semibold text-white transition hover:bg-[#6f583c]"
         >
           {{ blok.cta_label }}
         </a>

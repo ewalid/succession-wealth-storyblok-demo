@@ -12,7 +12,7 @@ defineProps({ blok: Object, index: Number });
           v-editable="stat"
           class="text-center"
         >
-          <p class="font-display text-4xl font-normal text-primary-highlight md:text-5xl">
+          <p class="font-display text-4xl font-normal text-[#8B6F4B] md:text-5xl">
             {{ stat.value }}
           </p>
           <p class="mt-2 text-sm font-medium text-[#121213]/75">
