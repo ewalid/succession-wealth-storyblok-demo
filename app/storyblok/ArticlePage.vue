@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({ blok: Object });
+const props = defineProps({ blok: Object, uuid: String });
 
 const optimizedArticleImage = computed(() =>
   getOptimizedImage(props.blok.image, 1600, 800),
@@ -47,5 +47,6 @@ const optimizedArticleImage = computed(() =>
       :blok="blok.call_to_action[0].content"
       :referenced="true"
     />
+    <OnwardJourney v-if="blok?.onward?.[0]" :blok="blok.onward[0]" :uuid="uuid" />
   </article>
 </template>

@@ -116,6 +116,12 @@ catch (error) {
   console.log(error);
 }
 
+// Campaign pages can lock the onward journey by hiding the site navigation.
+const hideNavigation = useState('hideNavigation', () => false);
+watchEffect(() => {
+  hideNavigation.value = !!story.value?.content?.hide_navigation;
+});
+
 const viewingSiteConfig = ref(
   story.value?.content?.component === 'site-config',
 );

@@ -155,5 +155,6 @@ const seoBlok = computed(() => props.blok?.seo?.[0]);
         :page-slug="story.full_slug"
       />
     </div>
+    <OnwardJourney v-if="blok?.onward?.[0]" :blok="blok.onward[0]" :uuid="story?.uuid" />
   </article>
 </template>

@@ -15,6 +15,7 @@ const props = defineProps({
   instagram: Object,
   youtube: Object,
   facebook: Object,
+  minimal: { type: Boolean, default: false },
 });
 
 const textColor = computed(() => (props.footerLight ? 'text-[#121213]' : 'text-white'));
@@ -42,9 +43,10 @@ const backgroundColor = computed(() => (props.footerLight ? 'bg-[#F3F1ED]' : 'bg
             authorised and regulated by the Financial Conduct Authority. FRN 588378.
           </p>
         </div>
+        <!-- Legal links stay on campaign pages (FCA); portals and Explore are hidden. -->
         <FooterNav v-if="nav1?.length" :nav="nav1" :headline="nav1Headline || 'Legal information'" :text-color="textColor" />
-        <FooterNav v-if="nav2?.length" :nav="nav2" :headline="nav2Headline || 'Client portals'" :text-color="textColor" />
-        <FooterNav v-if="nav3?.length" :nav="nav3" :headline="nav3Headline || 'Explore'" :text-color="textColor" />
+        <FooterNav v-if="!minimal && nav2?.length" :nav="nav2" :headline="nav2Headline || 'Client portals'" :text-color="textColor" />
+        <FooterNav v-if="!minimal && nav3?.length" :nav="nav3" :headline="nav3Headline || 'Explore'" :text-color="textColor" />
       </div>
 
       <div class="mt-12 border-t pt-6" :class="footerLight ? 'border-[#121213]/15' : 'border-white/15'">

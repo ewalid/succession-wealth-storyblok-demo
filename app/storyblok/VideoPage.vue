@@ -27,5 +27,6 @@ const seoBlok = computed(() => props.blok?.seo?.[0]);
         </div>
       </div>
     </div>
+    <OnwardJourney v-if="blok?.onward?.[0]" :blok="blok.onward[0]" :uuid="uuid" />
   </article>
 </template>

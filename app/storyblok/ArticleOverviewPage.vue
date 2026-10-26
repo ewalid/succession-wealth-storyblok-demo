@@ -1,148 +1,108 @@
 <script setup>
+/**
+ * Content library: articles and videos, filtered by topic (the specialisms
+ * datasource, the same tags planners use) and by free-text search.
+ */
 defineProps({ blok: Object });
 
-const { slug } = useRoute().params;
-let language = 'default';
-
-if (slug) {
-  language = await getLanguage(slug);
-}
-
-const sectionRoot = await getSectionRoot();
-const articlesPath = sectionRoot ? `${sectionRoot}/articles` : 'articles';
-const categoriesPath = sectionRoot ? `${sectionRoot}/categories` : 'categories';
+const storyblokApi = useStoryblokApi();
+const topics = useDatasource('specialisms');
 
 const searchTerm = ref('');
-const checkedCategory = ref('');
-
-const filterQuery = computed(() => {
-  const query = {};
-
-  if (checkedCategory.value) {
-    query.categories = {
-      in: checkedCategory.value,
-    };
-  }
-
-  return query;
-});
-
-const storyblokApi = useStoryblokApi();
-
+const checkedTopic = ref('');
 const loading = ref(true);
-
-const articles = ref(null);
+const articles = ref([]);
 
 const fetchArticles = async () => {
   loading.value = true;
-  articles.value = null;
-  const { data } = await storyblokApi.get('cdn/stories/', {
-    version: getVersion(),
-    starts_with: articlesPath,
-    language,
-    fallback_lang: 'default',
-    search_term: searchTerm.value,
-    filter_query: filterQuery.value,
-    resolve_relations: 'article-page.categories',
-  });
-  articles.value = data.stories.filter(story => story.is_startpage !== true);
+  const filter = { component: { in: 'article-page,video_page' } };
+  if (checkedTopic.value) {
+    filter.specialisms = { any_in_array: checkedTopic.value };
+  }
+  try {
+    const { data } = await storyblokApi.get('cdn/stories/', {
+      version: getVersion(),
+      search_term: searchTerm.value,
+      filter_query: filter,
+      sort_by: 'first_published_at:desc',
+      per_page: 48,
+    });
+    articles.value = (data.stories ?? []).filter(story => story.is_startpage !== true);
+  }
+  catch {
+    articles.value = [];
+  }
   loading.value = false;
 };
 
-fetchArticles();
+await fetchArticles();
 
-const categories = ref(null);
-
-const getCategories = async () => {
-  const { data } = await storyblokApi.get('cdn/stories/', {
-    version: getVersion(),
-    starts_with: categoriesPath,
-  });
-  categories.value = data.stories.filter(story => story.is_startpage !== true);
-};
-
-getCategories();
-
-const resetCategories = () => {
-  checkedCategory.value = '';
-  fetchArticles();
-};
-
-watch(searchTerm, () => {
-  fetchArticles();
+// Only offer topics that have content, so no filter leads to an empty page.
+const usedTopics = ref(new Set());
+onMounted(async () => {
+  try {
+    const { data } = await storyblokApi.get('cdn/stories/', {
+      version: getVersion(),
+      filter_query: { component: { in: 'article-page,video_page' } },
+      per_page: 100,
+    });
+    usedTopics.value = new Set((data.stories ?? []).flatMap(s => s.content?.specialisms || []));
+  }
+  catch {
+    /* show every topic */
+  }
 });
+const topicOptions = computed(() => topics.value.filter(t => !usedTopics.value.size || usedTopics.value.has(t.value)));
 
-watch(checkedCategory, () => {
-  fetchArticles();
-});
-
-const gridClasses = computed(() => getGridClasses());
+watch([searchTerm, checkedTopic], fetchArticles);
 </script>
 
 <template>
-  <section v-editable="blok" class="container">
+  <section v-editable="blok" class="container pt-12">
     <header>
-      <H1Headline
-        v-if="blok.headline"
-      >
+      <H1Headline v-if="blok.headline">
         {{ blok.headline }}
       </H1Headline>
       <nav>
-        <div class="mb-12 flex justify-center">
+        <div class="mb-8 flex justify-center">
           <label for="search" class="sr-only">Search</label>
           <input
             id="search"
             v-model="searchTerm"
             type="search"
             name="search"
-            placeholder="Search for anything"
-            class="border-dark rounded-lg border-2 px-12 py-4 text-xl focus:outline-none"
-            @keypress.enter="fetchArticles()"
+            placeholder="Search articles and videos"
+            class="w-full max-w-xl rounded-sm border border-primary-dark/25 px-5 py-3 text-lg focus:border-primary-highlight focus:outline-none"
           />
         </div>
-        <div class="border-medium mb-12 flex flex-col rounded-lg border p-1 lg:flex-row">
+        <div class="mb-12 flex flex-wrap justify-center gap-2" role="radiogroup" aria-label="Filter by topic">
           <button
-            class="w-full cursor-pointer rounded-md px-6 py-3 text-center text-lg"
-            :class=" !checkedCategory ? 'bg-primary-dark text-white' : 'text-primary-dark'"
-            @click.prevent="resetCategories()"
+            type="button"
+            class="rounded-sm border px-4 py-2 text-sm font-semibold"
+            :class="!checkedTopic ? 'border-primary-dark bg-primary-dark text-white' : 'border-primary-dark/20 text-primary-dark'"
+            @click="checkedTopic = ''"
           >
-            All
+            All topics
           </button>
-          <label
-            v-for="category in categories"
-            :key="category.uuid"
-            :for="category.uuid"
-            class="w-full cursor-pointer rounded-md px-6 py-3 text-center text-lg text-primary-dark"
-            :class=" checkedCategory === category.uuid ? 'bg-primary-dark text-white' : 'text-primary-dark'"
+          <button
+            v-for="t in topicOptions"
+            :key="t.value"
+            type="button"
+            class="rounded-sm border px-4 py-2 text-sm font-semibold"
+            :class="checkedTopic === t.value ? 'border-primary-dark bg-primary-dark text-white' : 'border-primary-dark/20 text-primary-dark'"
+            @click="checkedTopic = t.value"
           >
-            <input
-              :id="category.uuid"
-              v-model="checkedCategory"
-              type="radio"
-              :name="category.uuid"
-              :value="category.uuid"
-              class="sr-only"
-            />
-            <span>{{ category.name }}</span>
-          </label>
+            {{ t.name }}
+          </button>
         </div>
       </nav>
     </header>
     <main class="pb-24">
-      <section
-        v-if="!loading && articles.length"
-        :class="gridClasses"
-      >
-        <ArticleCardVertical
-          v-for="article in articles"
-          :key="article.uuid"
-          :article="article.content"
-          :slug="article.full_slug"
-        />
+      <section v-if="!loading && articles.length" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <ContentCard v-for="article in articles" :key="article.uuid" :story="article" />
       </section>
-
-      <section v-else-if="!loading && !articles.length">
-        Unfortunately, no articles matched your criteria.
+      <section v-else-if="!loading" class="text-primary-dark/70">
+        No articles or videos match these filters.
       </section>
     </main>
   </section>

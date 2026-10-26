@@ -122,6 +122,29 @@ const cssVariables = computed(() => {
 });
 
 const viewingSiteConfig = useState('viewingSiteConfig');
+// Set by the page from the campaign's "Hide site navigation" toggle.
+const hideNavigation = useState('hideNavigation', () => false);
+
+// Tracking IDs live in site-config (Tracking tab) so marketing can change them
+// without a deploy. GTM is the recommended route: GA4, Hotjar and ad pixels are
+// then managed inside Tag Manager. Never loaded inside the Visual Editor.
+const trackingRoute = useRoute();
+const trackingScripts = computed(() => {
+  const c = siteConfig.value?.content || {};
+  if (trackingRoute.query._storyblok !== undefined) {
+    return [];
+  }
+  const scripts = [];
+  if (/^GTM-[A-Z0-9]+$/.test(c.gtm_id || '')) {
+    scripts.push({ key: 'gtm', children: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${c.gtm_id}');` });
+  }
+  if (/^G-[A-Z0-9]+$/.test(c.ga4_id || '')) {
+    scripts.push({ key: 'ga4-src', src: `https://www.googletagmanager.com/gtag/js?id=${c.ga4_id}`, async: true });
+    scripts.push({ key: 'ga4', children: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${c.ga4_id}');` });
+  }
+  return scripts;
+});
+useHead({ script: trackingScripts });
 const { customParent } = useRuntimeConfig().public;
 
 onMounted(() => {
@@ -164,7 +187,7 @@ watch(currentSection, async () => {
 
 <template>
   <main>
-    <Header :logo="siteConfig.content.header_logo" />
+    <Header :logo="siteConfig.content.header_logo" :minimal="hideNavigation" />
     <div
       v-if="viewingSiteConfig && siteConfig.content.use_custom_colors"
       class="container py-12"
@@ -224,6 +247,7 @@ watch(currentSection, async () => {
       :instagram="siteConfig.content.instagram"
       :youtube="siteConfig.content.youtube"
       :facebook="siteConfig.content.facebook"
+      :minimal="hideNavigation"
     />
   </main>
 </template>

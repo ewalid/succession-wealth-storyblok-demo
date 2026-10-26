@@ -1,6 +1,8 @@
 <script setup>
 defineProps({
   logo: Object,
+  // Campaign pages can hide the menu so visitors stay on the page (UC1).
+  minimal: { type: Boolean, default: false },
 });
 
 const route = useRoute();
@@ -87,7 +89,7 @@ onMounted(() => {
     <div class="mx-auto max-w-[1200px] px-4 lg:px-6">
       <div class="flex items-start justify-between gap-4 py-3 lg:items-end lg:py-4">
         <NuxtLink
-          :to="inEditor ? '' : '/'"
+          :to="inEditor || minimal ? '' : '/'"
           class="flex shrink-0 flex-col items-center pt-1"
           aria-label="Return to homepage"
         >
@@ -104,7 +106,7 @@ onMounted(() => {
           </span>
         </NuxtLink>
 
-        <div class="hidden min-w-0 flex-1 flex-col lg:flex">
+        <div v-if="!minimal" class="hidden min-w-0 flex-1 flex-col lg:flex">
           <div class="mb-3 flex items-center justify-end gap-5">
             <a
               v-for="link in utilityLinks"
@@ -176,6 +178,7 @@ onMounted(() => {
         </div>
 
         <button
+          v-if="!minimal"
           type="button"
           class="mt-2 inline-flex flex-col gap-1.5 p-2 lg:hidden"
           aria-label="Open menu"
@@ -188,7 +191,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <div v-if="mobileOpen" class="border-t border-[#121213]/10 bg-white lg:hidden">
+    <div v-if="mobileOpen && !minimal" class="border-t border-[#121213]/10 bg-white lg:hidden">
       <div class="space-y-4 px-4 py-5">
         <form class="flex gap-2" @submit.prevent="onSearch">
           <input
