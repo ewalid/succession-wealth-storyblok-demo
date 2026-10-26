@@ -30,8 +30,13 @@ onMounted(() => {
 
 <template>
   <header
-    class="fixed left-0 top-0 z-[99] h-32 w-full border-b border-primary-dark transition-all duration-300"
-    :class="[headerScrollClass, { 'bg-primary-dark': !light }]"
+    class="fixed left-0 top-0 z-[99] h-32 w-full border-b transition-all duration-300"
+    :class="[
+      headerScrollClass,
+      light
+        ? 'border-primary-dark/10 bg-white/95 text-primary-dark backdrop-blur-sm'
+        : 'border-primary-dark bg-primary-dark',
+    ]"
   >
     <div
       class="mx-auto flex size-full max-w-screen-2xl items-center justify-between px-4 lg:justify-start lg:px-8"

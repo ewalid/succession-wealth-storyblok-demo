@@ -114,6 +114,7 @@ async function onSubmit(payload) {
 
 <template>
   <section
+    id="lead-form"
     v-editable="blok"
     class="relative overflow-hidden"
     :class="[
