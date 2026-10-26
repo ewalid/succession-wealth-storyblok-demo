@@ -1,7 +1,16 @@
 <script setup>
 const props = defineProps({ blok: Object, index: Number });
 
-const image = computed(() => getOptimizedImage(props.blok?.image, 1800, 1000));
+const mediaType = computed(() => props.blok?.media_type || 'image');
+const showVideo = computed(() =>
+  mediaType.value === 'video' && Boolean(props.blok?.video?.filename),
+);
+const image = computed(() => {
+  if (showVideo.value) {
+    return '';
+  }
+  return getOptimizedImage(props.blok?.image, 1800, 1000);
+});
 const primary = computed(() => getLinkUrl(props.blok?.primary_cta_link) || '#lead-form');
 const secondary = computed(() => getLinkUrl(props.blok?.secondary_cta_link) || '/planners');
 </script>
@@ -11,8 +20,17 @@ const secondary = computed(() => getLinkUrl(props.blok?.secondary_cta_link) || '
     v-editable="blok"
     class="relative isolate overflow-hidden bg-[#121213]"
   >
+    <video
+      v-if="showVideo"
+      :src="blok.video.filename"
+      class="absolute inset-0 size-full object-cover object-center"
+      autoplay
+      muted
+      loop
+      playsinline
+    />
     <img
-      v-if="image"
+      v-else-if="image"
       :src="image"
       :alt="blok?.image?.alt || ''"
       class="absolute inset-0 size-full object-cover object-center"

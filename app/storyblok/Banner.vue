@@ -16,17 +16,21 @@ const optimizedImage = computed(() => {
   return getOptimizedImage(props.blok.background_image, 1600, 1200);
 });
 
+const mediaType = computed(() => props.blok?.media_type || 'image');
+
 const showVideo = computed(() => {
-  if (
-    props.blok.background_image?.filename
-    && !props.blok.background_video?.filename
-  ) {
+  const hasVideo = Boolean(props.blok?.background_video?.filename);
+  if (!hasVideo) {
     return false;
   }
-  else if (props.blok.background_video?.filename) {
+  // Explicit Media = Video wins; otherwise keep legacy behaviour (video if set and no image).
+  if (mediaType.value === 'video') {
     return true;
   }
-  return false;
+  if (mediaType.value === 'image') {
+    return false;
+  }
+  return !props.blok?.background_image?.filename;
 });
 
 const imageClasses = computed(() => {
@@ -96,6 +100,7 @@ const overlay = computed(() => {
       autoplay
       muted
       loop
+      playsinline
     ></video>
     <img
       v-else-if="optimizedImage"
