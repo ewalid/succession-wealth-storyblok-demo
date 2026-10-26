@@ -128,7 +128,28 @@ const seoBlok = computed(() => props.blok?.seo?.[0]);
 
     <div id="lead-form">
       <LeadForm
-        :blok="{ component: 'lead_form', headline: 'Ready for a conversation?', intro: 'Share your details and we will arrange a confidential chat.', _uid: 'profile-lead' }"
+        v-if="blok?.form?.[0]"
+        :blok="blok.form[0]"
+        :planner="story"
+        :office="office"
+        :page-slug="story.full_slug"
+      />
+      <LeadForm
+        v-else
+        :blok="{
+          component: 'lead_form',
+          layout: 'dark_panel',
+          background: 'navy',
+          form_width: 'medium',
+          field_columns: '2',
+          form_mode: 'native',
+          headline: 'Ready for a conversation?',
+          intro: 'Share your details and we will arrange a confidential chat.',
+          fields: ['first_name', 'surname', 'email', 'phone', 'postcode', 'investment_value', 'heard_about'],
+          submit_label: 'Request a conversation',
+          show_attribution_preview: true,
+          _uid: 'profile-lead',
+        }"
         :planner="story"
         :office="office"
         :page-slug="story.full_slug"
