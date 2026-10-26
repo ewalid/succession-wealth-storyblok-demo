@@ -16,7 +16,7 @@ const officeUuid = computed(() => {
   <article v-editable="blok" class="bg-primary-background">
     <SeoMeta v-if="seoBlok" :blok="seoBlok" />
     <div class="container py-12">
-      <p class="text-xs font-semibold uppercase tracking-[0.16em] text-highlight-2">
+      <p class="text-xs font-semibold uppercase tracking-[0.16em] text-[#6b5434]">
         Event
         <span v-if="past" class="ml-2 rounded-sm bg-primary-dark px-2 py-1 text-white">Past event</span>
       </p>
@@ -35,7 +35,7 @@ const officeUuid = computed(() => {
         :href="booking"
         target="_blank"
         rel="noopener"
-        class="mt-8 inline-flex rounded-sm bg-primary-highlight px-5 py-2.5 text-sm font-semibold text-white"
+        class="mt-8 inline-flex rounded-sm bg-[#8B6F4B] hover:bg-[#6f583c] px-5 py-2.5 text-sm font-semibold text-white"
       >Book a place</a>
       <div v-if="hosts.length" class="mt-12">
         <h2 class="mb-6 font-display text-2xl text-primary-dark">Hosted by</h2>
