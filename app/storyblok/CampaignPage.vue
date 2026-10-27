@@ -4,6 +4,19 @@ const hero = computed(() => getOptimizedImage(props.blok?.hero_image, 1600, 900)
 const seoBlok = computed(() => props.blok?.seo?.[0]);
 const office = computed(() => (isResolvedStory(props.blok?.office) ? props.blok.office : null));
 
+// Location sections (lp-*) can be used on campaigns too: fill their {city}/{phone}/{address}
+// tokens and the office map from this campaign's Office.
+provideLocationTokens(computed(() => {
+  const c = office.value?.content || {};
+  const address = (c.address || '').split('\n').map(s => s.trim()).filter(Boolean).join(', ');
+  return {
+    city: c.name || '',
+    phone: c.phone || '',
+    address: c.postcode ? `${address}, ${c.postcode}` : address,
+    officeUuid: office.value?.uuid || '',
+  };
+}));
+
 // Hero: one of five layouts, with an image, an uploaded video or a YouTube film.
 const layout = computed(() => props.blok?.hero_layout || 'overlay_card');
 const mediaType = computed(() => props.blok?.hero_media_type || 'image');
