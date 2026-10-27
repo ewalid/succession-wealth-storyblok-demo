@@ -40,7 +40,7 @@ PRESETS = {
             "qualifications": ["chartered-financial-planner"], "specialisms": ["retirement-planning", "inheritance-tax", "investments"],
             "meeting_preferences": ["home", "office", "digital"],
             "short_bio": "Helps clients plan for retirement and pass on their wealth with confidence.",
-            "bio": doc("[First name] is a Chartered Wealth Planner based in our [office] office.", "Write two or three sentences about who they help and how."),
+            "bio": doc("[First name] is a Chartered Wealth Planner based in our [office] office, helping individuals and families plan for retirement and pass on their wealth.", "Every relationship starts with a conversation about what matters most: your family, your plans and the life you want to lead. [First name] then builds a financial plan around those goals and reviews it with you every year.", "Outside work: add a line about hobbies or community here."),
             "onward": onward(title="Articles and events with this planner")}),
         ("Specialist adviser (office and digital only)", {
             "job_title": "Employee Benefits Consultant", "active": True, "home_visit_radius_miles": "0",
