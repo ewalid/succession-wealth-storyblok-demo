@@ -6,6 +6,8 @@ defineProps({
     default: 'Submit',
   },
   editable: Boolean,
+  successMessage: { type: String, default: '' },
+  buttonAlign: { type: String, default: 'left' },
 });
 
 const formStatus = ref('idle');
@@ -36,19 +38,20 @@ onBeforeUnmount(() => {
 <template>
   <form
     v-if="fields?.length"
-    class="flex flex-col gap-4"
+    class="grid grid-cols-12 gap-4"
     @submit.prevent="submit"
   >
     <FormFields :fields="fields" :editable="editable" />
 
-    <p class="text-xs text-neutral-500">
+    <p class="col-span-12 text-xs text-neutral-500">
       * indicates a required field
     </p>
 
     <button
       type="submit"
       :disabled="formStatus === 'submitting'"
-      class="focus-ring inline-flex w-full items-center justify-center self-start rounded-md border-2 border-primary-dark bg-primary-dark px-8 py-3 font-semibold tracking-wider text-white transition-all duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+      class="focus-ring col-span-12 inline-flex w-full items-center justify-center rounded-[5px] bg-[#8b6f4b] px-8 py-3 font-semibold tracking-wide text-white transition hover:bg-[#6f583c] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+      :class="{ 'sm:justify-self-start': buttonAlign === 'left', 'sm:justify-self-center': buttonAlign === 'center', 'sm:w-full': buttonAlign === 'full' }"
     >
       {{ formStatus === 'submitting' ? 'Submitting\u2026' : buttonText }}
     </button>
@@ -56,9 +59,9 @@ onBeforeUnmount(() => {
     <Transition name="fade">
       <p
         v-if="formStatus === 'success'"
-        class="text-sm font-medium text-green-700"
+        class="col-span-12 text-sm font-medium text-green-700"
       >
-        Thanks! Your submission has been received.
+        {{ successMessage || 'Thanks! Your submission has been received.' }}
       </p>
     </Transition>
   </form>

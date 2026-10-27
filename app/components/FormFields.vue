@@ -1,5 +1,18 @@
 <script setup>
 defineProps({ fields: Array, editable: Boolean });
+
+// Each Form field picks its width; fields sit side by side until a row is full.
+// On phones every field is full width.
+const WIDTHS = {
+  full: 'sm:col-span-12',
+  two_thirds: 'sm:col-span-8',
+  half: 'sm:col-span-6',
+  third: 'sm:col-span-4',
+  quarter: 'sm:col-span-3',
+};
+function fieldClass(field) {
+  return ['col-span-12', WIDTHS[field.width] || WIDTHS.full, field.start_new_row ? 'sm:col-start-1' : ''];
+}
 </script>
 
 <template>
@@ -7,6 +20,7 @@ defineProps({ fields: Array, editable: Boolean });
     v-for="(field, fieldIndex) in fields"
     :key="field._uid || `field-${fieldIndex}`"
     v-editable="editable ? field : undefined"
+    :class="fieldClass(field)"
   >
     <!-- Text / Email / Tel — floating label -->
     <template v-if="['text', 'email', 'tel'].includes(field.field_type)">
@@ -18,7 +32,7 @@ defineProps({ fields: Array, editable: Boolean });
           :placeholder="field.label"
           :required="field.is_required"
           :autocomplete="field.autocomplete || (field.field_type === 'email' ? 'email' : field.field_type === 'tel' ? 'tel' : undefined)"
-          class="peer w-full rounded-lg border border-neutral-300 bg-white px-4 pb-2 pt-6 text-sm text-neutral-900 outline-none transition-colors placeholder:text-transparent focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900"
+          class="peer w-full rounded-sm border border-neutral-300 bg-white px-4 pb-2 pt-6 text-sm text-neutral-900 outline-none transition-colors placeholder:text-transparent focus:border-[#8b6f4b] focus:ring-1 focus:ring-[#8b6f4b]"
         />
         <label
           v-if="field.label"
@@ -40,7 +54,7 @@ defineProps({ fields: Array, editable: Boolean });
           :placeholder="field.label"
           :required="field.is_required"
           :rows="field.rows || 4"
-          class="peer w-full rounded-lg border border-neutral-300 bg-white px-4 pb-2 pt-6 text-sm text-neutral-900 outline-none transition-colors placeholder:text-transparent focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900"
+          class="peer w-full rounded-sm border border-neutral-300 bg-white px-4 pb-2 pt-6 text-sm text-neutral-900 outline-none transition-colors placeholder:text-transparent focus:border-[#8b6f4b] focus:ring-1 focus:ring-[#8b6f4b]"
         ></textarea>
         <label
           v-if="field.label"
@@ -60,7 +74,7 @@ defineProps({ fields: Array, editable: Boolean });
           :id="`field-${field._uid || fieldIndex}`"
           :name="field.name"
           :required="field.is_required"
-          class="peer w-full appearance-none rounded-lg border border-neutral-300 bg-white px-4 pb-2 pr-10 pt-6 text-sm text-neutral-900 outline-none transition-colors invalid:text-neutral-500 focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900"
+          class="peer w-full appearance-none rounded-sm border border-neutral-300 bg-white px-4 pb-2 pr-10 pt-6 text-sm text-neutral-900 outline-none transition-colors invalid:text-neutral-500 focus:border-[#8b6f4b] focus:ring-1 focus:ring-[#8b6f4b]"
         >
           <option value="" :disabled="field.is_required" selected>
             {{ field.placeholder || 'Select an option' }}
@@ -106,7 +120,7 @@ defineProps({ fields: Array, editable: Boolean });
           {{ field.label }}
           <span v-if="field.is_required" class="ml-1 text-red-600">*</span>
         </legend>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-wrap gap-x-6 gap-y-2">
           <label
             v-for="option in field.options"
             :key="option._uid || option.value"
@@ -117,7 +131,7 @@ defineProps({ fields: Array, editable: Boolean });
               :name="field.name"
               :value="option.value"
               :required="field.is_required"
-              class="size-4 accent-neutral-900 focus:ring-neutral-900"
+              class="size-4 accent-[#8b6f4b] focus:ring-[#8b6f4b]"
             />
             {{ option.label }}
           </label>
@@ -126,6 +140,19 @@ defineProps({ fields: Array, editable: Boolean });
     </template>
 
     <!-- Checkbox -->
+    <template v-else-if="field.field_type === 'checkbox' && !field.options?.length">
+      <label class="flex cursor-pointer items-start gap-3 text-sm text-neutral-800">
+        <input
+          type="checkbox"
+          :name="field.name"
+          value="yes"
+          :required="field.is_required"
+          class="mt-0.5 size-4 shrink-0 rounded accent-[#8b6f4b]"
+        />
+        <span>{{ field.label }}<span v-if="field.is_required" class="ml-1 text-red-600">*</span></span>
+      </label>
+    </template>
+
     <template v-else-if="field.field_type === 'checkbox'">
       <fieldset class="flex flex-col gap-2">
         <legend
@@ -135,7 +162,7 @@ defineProps({ fields: Array, editable: Boolean });
           {{ field.label }}
           <span v-if="field.is_required" class="ml-1 text-red-600">*</span>
         </legend>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-wrap gap-x-6 gap-y-2">
           <label
             v-for="option in field.options"
             :key="option._uid || option.value"
@@ -145,7 +172,7 @@ defineProps({ fields: Array, editable: Boolean });
               type="checkbox"
               :name="`${field.name}[]`"
               :value="option.value"
-              class="size-4 rounded accent-neutral-900 focus:ring-neutral-900"
+              class="size-4 rounded accent-[#8b6f4b] focus:ring-[#8b6f4b]"
             />
             {{ option.label }}
           </label>

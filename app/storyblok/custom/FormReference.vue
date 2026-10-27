@@ -26,19 +26,13 @@ const buttonLabel = computed(() => {
 </script>
 
 <template>
-  <section
-    v-editable="blok"
-    class="page-section"
-  >
-    <div class="container max-w-2xl">
-      <h3
-        v-if="blok.title"
-        class="mb-6 text-2xl font-extrabold tracking-tight text-primary-dark"
-      >
-        {{ blok.title }}
-      </h3>
-
-      <FormDisplay :fields="formFields" :button-text="buttonLabel" />
-    </div>
-  </section>
+  <div v-editable="blok">
+    <!-- Layout, image and intro come from the referenced Form; Title overrides its heading -->
+    <FormLayout
+      :settings="primaryForm?.content || primaryForm || {}"
+      :fields="formFields"
+      :button-text="buttonLabel"
+      :headline="blok.title || ''"
+    />
+  </div>
 </template>
